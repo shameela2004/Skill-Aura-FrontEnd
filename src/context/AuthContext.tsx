@@ -105,7 +105,7 @@ import React, { createContext, useState, useContext, type ReactNode, useEffect }
 import axiosInstance from "../services/axiosInstance";
 
 export interface UserType {
-  id: string;
+  id: number;
   name: string;
   email: string;
   profilePictureUrl: string;

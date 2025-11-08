@@ -9,6 +9,8 @@ import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import ProfilePage from "./pages/User/ProfilePage";
 import BecomeMentorPage from "./pages/User/BecomeMentorPage";
 import NotAuthorizedPage from "./pages/User/NotAuthorizedPage";
+import GroupsList from "./pages/User/GroupListPage";
+import GroupDetails from "./pages/User/GroupDetailsPage";
 
 export default function AppRoutes() {
   return (
@@ -16,24 +18,26 @@ export default function AppRoutes() {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        <Route path="/forgot-password" element={<ForgotPassword/>}/>
-         <Route element={<UserLayout />}>
-              {/* <Route path="/dashboard"element={<ProtectedRoute roles={["Learner", "Mentor"]}>  <UserDashboard /></ProtectedRoute>}/> */}
-              <Route
-  path="/dashboard"
-  element={
-    <ProtectedRoute roles={["Learner", "Mentor"]}>
-      <UserDashboard />
-    </ProtectedRoute>
-  }
-/>
-<Route path="/apply-mentor" element={<BecomeMentorPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route element={<UserLayout />}>
+          {/* <Route path="/dashboard"element={<ProtectedRoute roles={["Learner", "Mentor"]}>  <UserDashboard /></ProtectedRoute>}/> */}
+          <Route
+            path="/dashboard"
+            element={
+              <ProtectedRoute roles={["Learner", "Mentor"]}>
+                <UserDashboard />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/apply-mentor" element={<BecomeMentorPage />} />
+          <Route path="/me" element={<ProfilePage />} />
+                    <Route path="/groups" element={<GroupsList />} />
+                              <Route path="/groups/:id" element={<GroupDetails />} />
 
-    
-              <Route path="/me" element={<ProfilePage/>} />
-      </Route>
+
+        </Route>
         <Route path="/" element={<IntroPage />} />
-                <Route path="/not-authorized" element={<NotAuthorizedPage />} />
+        <Route path="/not-authorized" element={<NotAuthorizedPage />} />
 
         {/* More routes */}
       </Routes>
