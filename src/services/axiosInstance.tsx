@@ -26,11 +26,12 @@ axiosInstance.interceptors.response.use(
     if (error.response && error.response.status === 401 && !origReq._retry) {
       origReq._retry = true;
       try {
-        await axiosInstance.post("/auth/refresh-token");
+        await axiosInstance.post("/auth/refresh");
         // After refreshing, retry the original request
         return axiosInstance(origReq);
       } catch (refreshErr) {
         // If refresh fails, redirect to login or handle logout
+        localStorage.removeItem("user");
         window.location.href = "/login";
       }
     }

@@ -13,27 +13,62 @@ const EditProfileSection: React.FC<Props> = ({ user, onClose, onProfileUpdated }
     name: user.name || "",
     bio: user.bio || "",
     location: user.location || "",
-    profilePictureUrl: user.profilePictureUrl || "",
   });
 
   const [loading, setLoading] = useState(false);
+  // const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-
+//   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//   if (e.target.files && e.target.files.length > 0) {
+//     setSelectedFile(e.target.files[0]);
+//   }
+// };
+  // const handleSubmit = async () => {
+  //   setLoading(true);
+  //   try {
+  //     await axiosInstance.put("/user/me", form);
+  //     onProfileUpdated();
+  //     onClose();
+  //   } catch (err) {
+  //     console.error("Failed to update profile", err);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
   const handleSubmit = async () => {
-    setLoading(true);
-    try {
-      await axiosInstance.put("/user/me", form);
-      onProfileUpdated();
-      onClose();
-    } catch (err) {
-      console.error("Failed to update profile", err);
-    } finally {
-      setLoading(false);
-    }
-  };
+  setLoading(true);
+  try {
+    // if (selectedFile) {
+    //   const formData = new FormData();
+    //   formData.append("file", selectedFile);
+    //   formData.append("referenceType", "UserProfile");
+    //   formData.append("referenceId", user.id); // Pass logged in user's id
+
+    //   await axiosInstance.post("/media/upload", formData, {
+    //     headers: { "Content-Type": "multipart/form-data" }
+    //   });
+    // }
+
+    await axiosInstance.put("/user/me", {
+      name: form.name,
+      bio: form.bio,
+      location: form.location,
+      // Don't send profilePictureUrl, it's handled by the media upload
+    });
+    
+    onProfileUpdated();
+    onClose();
+  } catch (err) {
+    console.error("Failed to update profile", err);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="mt-6 bg-gray-50 border border-gray-200 rounded-xl p-6 shadow-inner">
@@ -81,7 +116,7 @@ const EditProfileSection: React.FC<Props> = ({ user, onClose, onProfileUpdated }
           ></textarea>
         </div>
 
-        <div className="sm:col-span-2">
+        {/* <div className="sm:col-span-2">
           <label className="text-sm font-medium text-gray-600">Profile Picture URL</label>
           <input
             type="text"
@@ -90,7 +125,12 @@ const EditProfileSection: React.FC<Props> = ({ user, onClose, onProfileUpdated }
             onChange={handleChange}
             className="mt-1 w-full border border-gray-300 rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-indigo-500"
           />
-        </div>
+        </div> */}
+        {/* <div className="sm:col-span-2">
+  <label className="text-sm font-medium text-gray-600">Profile Picture</label>
+  <input type="file" accept="image/*" onChange={handleFileChange} />
+</div> */}
+
       </div>
 
       <div className="flex justify-end gap-3 mt-6">
