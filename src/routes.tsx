@@ -11,6 +11,10 @@ import BecomeMentorPage from "./pages/User/BecomeMentorPage";
 import NotAuthorizedPage from "./pages/User/NotAuthorizedPage";
 import GroupsList from "./pages/User/GroupListPage";
 import GroupDetails from "./pages/User/GroupDetailsPage";
+import ChatApp from "./pages/User/chat/ChatApp";
+import ChatWrapper from "./pages/User/chat/ChatWrapper";
+import SessionsManagement from "./pages/User/SessionManagement";
+import MyBookingsPage from "./pages/User/MyBookingsPage";
 
 export default function AppRoutes() {
   return (
@@ -19,22 +23,25 @@ export default function AppRoutes() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route element={<UserLayout />}>
-          {/* <Route path="/dashboard"element={<ProtectedRoute roles={["Learner", "Mentor"]}>  <UserDashboard /></ProtectedRoute>}/> */}
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute roles={["Learner", "Mentor"]}>
-                <UserDashboard />
-              </ProtectedRoute>
-            }
-          />
+
+        {/* <Route path="/dashboard"element={<ProtectedRoute roles={["Learner", "Mentor"]}>  <UserDashboard /></ProtectedRoute>}/> */}
+        <Route
+          element={
+            <ProtectedRoute roles={["Learner", "Mentor"]}>
+              <UserLayout />
+            </ProtectedRoute>
+          }
+        >
+          <Route path="/dashboard" element={<UserDashboard />} />
           <Route path="/apply-mentor" element={<BecomeMentorPage />} />
           <Route path="/me" element={<ProfilePage />} />
-                    <Route path="/groups" element={<GroupsList />} />
-                              <Route path="/groups/:id" element={<GroupDetails />} />
+          <Route path="/groups" element={<GroupsList />} />
+          <Route path="/groups/:id" element={<GroupDetails />} />
+          <Route path="/chat" element={<ChatApp />} />
+          <Route path="/chat/:otherUserId" element={<ChatApp />} />
+          <Route path="/sessions" element={<SessionsManagement />} />
 
-
+          <Route path="/myBookings" element={<MyBookingsPage />} />
         </Route>
         <Route path="/" element={<IntroPage />} />
         <Route path="/not-authorized" element={<NotAuthorizedPage />} />

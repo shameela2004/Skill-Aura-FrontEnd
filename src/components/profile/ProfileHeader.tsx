@@ -196,7 +196,7 @@ const ProfileHeader: React.FC<Props> = ({ user, onProfileUpdated }) => {
         <div className="flex items-center gap-6">
           <div className="relative w-28 h-28">
             <img
-              src={`https://localhost:7027${user.profilePictureUrl}`}
+              src={`https://localhost:7027${user.profilePictureUrl}`|| "/default-avatar.png"}
               alt="Profile"
               className="w-28 h-28 rounded-full border-4 border-indigo-500 object-cover"
             />

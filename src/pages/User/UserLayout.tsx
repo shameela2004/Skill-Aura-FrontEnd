@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
-import { FiAward, FiUsers, FiMessageCircle, FiGrid, FiLogOut, FiUser } from "react-icons/fi";
+import { FiAward, FiUsers, FiMessageCircle, FiGrid, FiLogOut, FiUser, FiBookmark } from "react-icons/fi";
 import { MdGroups } from "react-icons/md";
 import { useAuth } from "../../context/AuthContext";
 import CommonModal from "../../components/CommonModal";
@@ -62,12 +62,23 @@ export default function UserLayout() {
           >
             <FiAward /> Sessions
           </NavLink>
+
+            
+            
           <NavLink
-            to="/messages"
+            to="/myBookings"
+            className="py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-gray-50"
+          >
+              <FiBookmark /> My Bookings
+          </NavLink>
+
+          <NavLink
+            to="/chat"
             className="py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-gray-50"
           >
             <FiMessageCircle /> Messages
           </NavLink>
+          
           <NavLink
             to="/groups"
             className="py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-gray-50"
@@ -96,8 +107,9 @@ export default function UserLayout() {
         {/* --- User Info Section --- */}
         {user ? (
           <div className="mt-6 mb-2 flex items-center gap-3">
+            {/* <p>{`https://localhost:7027${user.profilePictureUrl}`}</p> */}
             <img
-              src={user.profilePictureUrl || "/default-avatar.png"}
+              src={`https://localhost:7027${user.profilePictureUrl}`|| "/default-avatar.png"}
               alt="Profile"
               className="w-10 h-10 rounded-full border object-cover"
             />

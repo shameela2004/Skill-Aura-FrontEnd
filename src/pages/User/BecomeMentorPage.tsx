@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CommonModal from "../../components/CommonModal";
 import { useAuth } from "../../context/AuthContext";
+import { toast } from "react-toastify";
 
 export default function BecomeMentorPage() {
   const { user, applyForMentor, fetchMentorStatus } = useAuth();
