@@ -15,6 +15,8 @@ import ChatApp from "./pages/User/chat/ChatApp";
 import ChatWrapper from "./pages/User/chat/ChatWrapper";
 import SessionsManagement from "./pages/User/SessionManagement";
 import MyBookingsPage from "./pages/User/MyBookingsPage";
+import MentorsList from "./pages/User/MentorsList";
+import MentorProfile from "./pages/User/MentorProfile";
 
 export default function AppRoutes() {
   return (
@@ -42,6 +44,8 @@ export default function AppRoutes() {
           <Route path="/sessions" element={<SessionsManagement />} />
 
           <Route path="/myBookings" element={<MyBookingsPage />} />
+          <Route path="/mentors" element={<MentorsList />} />
+          <Route path="/mentors/:id" element={<MentorProfile />} />
         </Route>
         <Route path="/" element={<IntroPage />} />
         <Route path="/not-authorized" element={<NotAuthorizedPage />} />

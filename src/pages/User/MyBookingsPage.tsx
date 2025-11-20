@@ -222,7 +222,7 @@ export default function MyBookingsPage() {
                       {new Date(booking.session?.scheduledAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                     </p>
                     <p className="flex items-center gap-1">
-                      <FaRupeeSign /> {booking.session?.price} - {booking.session?.mode}
+                      <FaRupeeSign /> {booking.paymentAmount} - {booking.session?.mode}
                     </p>
                     <p>Status: {booking.status}</p>
                     <p>Payment: {booking.paymentStatus}</p>
@@ -247,10 +247,10 @@ export default function MyBookingsPage() {
           ) : (
             pastBookings.map(booking => (
               <div key={booking.id} className="bg-white rounded-2xl shadow p-6 mb-5 flex items-center gap-4">
-                {booking.mentor?.profilePictureUrl ? (
+                {booking.mentorProfilePictureUrl ? (
                   <img
-                    src={booking.mentor.profilePictureUrl}
-                    alt={booking.mentor.name}
+                    src={`https://localhost:7027${booking.mentorProfilePictureUrl}`}
+                    alt={booking.mentorName}
                     className="rounded-full w-16 h-16 object-cover border"
                   />
                 ) : (
@@ -260,14 +260,14 @@ export default function MyBookingsPage() {
                 )}
                 <div>
                   <h2 className="font-semibold text-lg">{booking.skill}</h2>
-                  <p className="text-sm text-gray-600">{booking.mentor?.name}</p>
+                  <p className="text-sm text-gray-600">{booking.mentorName}</p>
                   <p>
                     Scheduled at:{" "}
                     {new Date(booking.sessionDate).toLocaleDateString()} @{" "}
                     {new Date(booking.sessionDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                   </p>
                   <p className="flex items-center gap-1">
-                    <FaRupeeSign /> {booking.price} - {booking.mode}
+                    <FaRupeeSign /> {booking.paymentAmount} - {booking.mode}
                   </p>
                   <p>Status: {booking.status}</p>
                   <p>Payment: {booking.paymentStatus}</p>
