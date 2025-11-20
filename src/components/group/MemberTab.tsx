@@ -169,21 +169,21 @@ export default function MembersTab({ groupId, isMentorOrAdmin }: { groupId: numb
           </thead>
           <tbody>
             {members.map((m) => {
-              const user = userMap[m.userId];
+              // const user = userMap[m.userId];
               return (
                 <tr key={m.userId} className="border-b last:border-b-0">
                   <td className="px-4 py-3">
-                    {user?.profilePictureUrl ? (
+                    {m?.profilePictureUrl ? (
                       <img
-                        src={`https://localhost:7027${user.profilePictureUrl}`}
-                        alt={user.name}
+                        src={`https://localhost:7027${m.profilePictureUrl}`}
+                        alt={m.userName}
                         className="w-10 h-10 rounded-full border object-cover"
                       />
                     ) : (
                       <div className="w-7 h-7 rounded-full bg-gray-200" />
                     )}
                   </td>
-                  <td className="px-4 py-3">{user?.name ?? m.userName}</td>
+                  <td className="px-4 py-3">{m?.userName ?? m.userName}</td>
                   <td className="px-4 py-3">{m.role}</td>
                   {isMentorOrAdmin && (
                     <td className="px-4 py-3">

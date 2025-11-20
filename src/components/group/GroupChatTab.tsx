@@ -144,7 +144,7 @@ export default function GroupChatTab({ groupId, userId }: { groupId: number; use
             return (
               <div key={i} className={isMe ? "flex justify-end mb-3" : "flex justify-start mb-3"}>
                 
-                {/* {!isMe && member?.avatarUrl && (
+                {!isMe && member?.avatarUrl && (
                   <img
                         src={`https://localhost:7027${member.avatarUrl}`}
 
@@ -152,7 +152,7 @@ export default function GroupChatTab({ groupId, userId }: { groupId: number; use
                     className="w-6 h-6 rounded-full mr-2 self-end"
                   />
 
-                )} */}
+                )}
                 <div
                   className={
                     isMe
@@ -168,13 +168,13 @@ export default function GroupChatTab({ groupId, userId }: { groupId: number; use
                     {new Date(msg.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                   </div>
                 </div>
-                {/* {isMe && member?.avatarUrl && (
+                {isMe && member?.avatarUrl && (
                   <img
-                    src={member.avatarUrl}
+                     src={`https://localhost:7027${member.avatarUrl}`|| "/default-avatar.png"}
                     alt="Your avatar"
                     className="w-6 h-6 rounded-full ml-2 self-end"
                   />
-                )} */}
+                )}
               </div>
             );
           })

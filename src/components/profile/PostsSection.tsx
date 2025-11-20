@@ -49,6 +49,7 @@ const PostsSection: React.FC<Props> = ({ user }) => {
         const res = await axiosInstance.post("/media/upload", formData, {
           headers: { "Content-Type": "multipart/form-data" },
         });
+        await axiosInstance.post("/")
         // Assuming response has new media ID
         postMediaUrl = `https://localhost:7027/api/media/${res.data}`;
         setMediaFile(null);

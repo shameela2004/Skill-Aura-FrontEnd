@@ -184,6 +184,7 @@ const ProfileHeader: React.FC<Props> = ({ user, onProfileUpdated }) => {
           headers: { "Content-Type": "multipart/form-data" },
         });
         onProfileUpdated(); // Refresh profile after upload
+        await axiosInstance.post("/user/updateProfilePicture")
       } catch (error) {
         console.error("Failed to upload profile picture", error);
       }

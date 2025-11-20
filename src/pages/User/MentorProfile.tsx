@@ -207,7 +207,6 @@ export default function MentorProfile() {
       setMentor(res.data.data)
     );
   }, [id]);
-
   if (!mentor) return <div className="min-h-screen flex items-center justify-center">Loading...</div>;
 
   return (
@@ -235,7 +234,7 @@ export default function MentorProfile() {
         {/* Tab Content */}
         {activeTab === "About" && <AboutTab mentor={mentor} />}
         {activeTab === "Skills" && <SkillsTab skills={mentor.skills?.$values ?? []} />}
-        {activeTab === "Portfolio" && <PortfolioTab posts={mentor.posts?.$values ?? []} />}
+        {activeTab === "Portfolio" && <PortfolioTab posts={mentor.posts?.$values ?? []} loggedInUserId={user?.id} />}
         {/* {activeTab === "Availability" && <AvailabilityTab availabilities={mentor.mentorAvailabilities?.$values ?? []} />} */}
          {activeTab === "Session" && <MentorSessionsTab mentorId={mentor.id} userId={user?.id}/>}
 

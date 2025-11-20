@@ -202,27 +202,27 @@ export default function MyBookingsPage() {
             upcomingBookings.map(booking => (
               <div key={booking.id} className="bg-white rounded-2xl shadow p-6 mb-5 flex justify-between items-center gap-4">
                 <div className="flex items-center gap-4">
-                  {booking.mentor?.profilePictureUrl ? (
+                  {booking.mentorProfilePictureUrl ? (
                     <img
-                      src={booking.mentor.profilePictureUrl}
-                      alt={booking.mentor.name}
+                        src={`https://localhost:7027${booking.mentorProfilePictureUrl}`}
+                      alt={booking.mentorName}
                       className="rounded-full w-16 h-16 object-cover border"
                     />
                   ) : (
                     <div className="rounded-full w-16 h-16 bg-gray-300 flex items-center justify-center text-gray-600 font-bold text-xl">
-                      {booking.mentor?.name?.[0] || "M"}
+                      {booking.mentorName?.[0] || "M"}
                     </div>
                   )}
                   <div>
-                    <h2 className="font-semibold text-lg">{booking.session?.skill?.name}</h2>
-                    <p className="text-sm text-gray-600">{booking.mentor?.name}</p>
+                    <h2 className="font-semibold text-lg">{booking.skillName}</h2>
+                    <p className="text-sm text-gray-600">{booking.mentorName}</p>
                     <p className="text-gray-700">
                       Scheduled at:{" "}
-                      {new Date(booking.session?.scheduledAt).toLocaleDateString()} @{" "}
-                      {new Date(booking.session?.scheduledAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
+                      {new Date(booking.sessionDate).toLocaleDateString()} @{" "}
+                      {new Date(booking.sessionDate).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
                     </p>
                     <p className="flex items-center gap-1">
-                      <FaRupeeSign /> {booking.paymentAmount} - {booking.session?.mode}
+                      <FaRupeeSign /> {booking.paymentAmount} - {booking.mode}
                     </p>
                     <p>Status: {booking.status}</p>
                     <p>Payment: {booking.paymentStatus}</p>
