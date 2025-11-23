@@ -3,7 +3,6 @@ import Login from "./pages/Auth/Login";
 import Signup from "./pages/Auth/Signup";
 import IntroPage from "./pages/IntroPage";
 import ForgotPassword from "./pages/Auth/ForgotPassword";
-import UserDashboard from "./pages/User/UserDashboard";
 import UserLayout from "./pages/User/UserLayout";
 import ProtectedRoute from "./components/Auth/ProtectedRoute";
 import ProfilePage from "./pages/User/ProfilePage";
@@ -17,6 +16,11 @@ import SessionsManagement from "./pages/User/SessionManagement";
 import MyBookingsPage from "./pages/User/MyBookingsPage";
 import MentorsList from "./pages/User/MentorsList";
 import MentorProfile from "./pages/User/MentorProfile";
+import ConnectionsPage from "./pages/User/ConnectionsPage";
+import UserList from "./pages/User/UserList";
+import UserProfile from "./pages/User/UserProfile";
+import FeedsPage from "./pages/User/FeedsPage";
+import HomePage from "./pages/User/HomePage";
 
 export default function AppRoutes() {
   return (
@@ -34,7 +38,7 @@ export default function AppRoutes() {
             </ProtectedRoute>
           }
         >
-          <Route path="/dashboard" element={<UserDashboard />} />
+          <Route path="/dashboard" element={<HomePage />} />
           <Route path="/apply-mentor" element={<BecomeMentorPage />} />
           <Route path="/me" element={<ProfilePage />} />
           <Route path="/groups" element={<GroupsList />} />
@@ -42,10 +46,13 @@ export default function AppRoutes() {
           <Route path="/chat" element={<ChatApp />} />
           <Route path="/chat/:otherUserId" element={<ChatApp />} />
           <Route path="/sessions" element={<SessionsManagement />} />
-
           <Route path="/myBookings" element={<MyBookingsPage />} />
           <Route path="/mentors" element={<MentorsList />} />
           <Route path="/mentors/:id" element={<MentorProfile />} />
+             <Route path="/users" element={<UserList />} />
+          <Route path="/users/:id" element={<UserProfile />} />
+           <Route path="/connections" element={<ConnectionsPage />} />
+           <Route path="/feed" element={<FeedsPage />} />
         </Route>
         <Route path="/" element={<IntroPage />} />
         <Route path="/not-authorized" element={<NotAuthorizedPage />} />

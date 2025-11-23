@@ -1,15 +1,34 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, NavLink, useNavigate } from "react-router-dom";
 import { FiAward, FiUsers, FiMessageCircle, FiGrid, FiLogOut, FiUser, FiBookmark } from "react-icons/fi";
 import { MdGroups } from "react-icons/md";
 import { useAuth } from "../../context/AuthContext";
 import CommonModal from "../../components/CommonModal";
+import axiosInstance from "../../services/axiosInstance";
+import { FaRss, FaUserGraduate } from "react-icons/fa";
 
 export default function UserLayout() {
   const navigate = useNavigate();
   const { user, logout } = useAuth();
     const [showModal, setShowModal] = useState(false);
+      const [pendingConnectionCount, setPendingConnectionCount] = useState(0);
 
+const navLinkClass = ({ isActive }: { isActive: boolean }) =>
+  `py-2 px-4 rounded-lg flex items-center gap-2 mb-1 transition cursor-pointer ${
+    isActive ? "bg-indigo-600 text-white" : "text-gray-700 hover:bg-gray-50"
+  }`;
+
+ useEffect(() => {
+    async function fetchPendingCount() {
+      try {
+        const res = await axiosInstance.get("/connection/connections/pending/count");
+        setPendingConnectionCount(res.data.data ?? 0);
+      } catch {
+        setPendingConnectionCount(0);
+      }
+    }
+    fetchPendingCount();
+  }, []);
 
   const handleLogout = async () => {
     try {
@@ -40,26 +59,41 @@ export default function UserLayout() {
         <nav className="flex flex-col gap-1 font-semibold">
           <NavLink
             to="/dashboard"
-            className={({ isActive }) =>
-              `py-2 px-4 rounded-xl flex items-center gap-2 mb-3 ${
-                isActive
-                  ? "bg-gradient-to-r from-indigo-400 to-purple-400 text-white shadow"
-                  : "hover:bg-gray-50"
-              }`
-            }
+            // className={({ isActive }) =>
+            //   `py-2 px-4 rounded-xl flex items-center gap-2 mb-3 ${
+            //     isActive
+            //       ? "bg-gradient-to-r from-indigo-400 to-purple-400 text-white shadow"
+            //       : "hover:bg-gray-50"
+            //   }`
+            // }
+            className={navLinkClass}
           >
             <FiGrid /> Home
           </NavLink>
           <NavLink
             to="/mentors"
+className={navLinkClass}          >
+            <FaUserGraduate /> Find Mentors
+          </NavLink>
+
+            {/* <NavLink
+            to="/users"
             className="py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-gray-50"
           >
-            <FiUsers /> Find Mentors
+            <FiUsers /> Find Userssss
+          </NavLink> */}
+
+
+            <NavLink
+            to="/feed"
+className={navLinkClass}          >
+            <FaRss /> Feed
           </NavLink>
+
+
           <NavLink
             to="/sessions"
-            className="py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-gray-50"
-          >
+className={navLinkClass}          >
             <FiAward /> Sessions
           </NavLink>
 
@@ -67,37 +101,48 @@ export default function UserLayout() {
             
           <NavLink
             to="/myBookings"
-            className="py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-gray-50"
-          >
+className={navLinkClass}          >
               <FiBookmark /> My Bookings
           </NavLink>
 
           <NavLink
             to="/chat"
-            className="py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-gray-50"
-          >
+className={navLinkClass}          >
             <FiMessageCircle /> Messages
           </NavLink>
           
           <NavLink
             to="/groups"
-            className="py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-gray-50"
-          >
+className={navLinkClass}          >
             <MdGroups /> Groups
           </NavLink>
+          
+
+         <NavLink
+          to="/connections"
+         className={navLinkClass}
+        >
+          <FiUsers /> Connections
+          {pendingConnectionCount > 0 && (
+            <span className="ml-auto inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 bg-red-600 rounded-full">
+              {pendingConnectionCount}
+            </span>
+          )}
+        </NavLink>
+          
+
           <NavLink
             to="/me"
-            className="py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-gray-50"
-          >
+className={navLinkClass}          >
             <FiUser /> Profile
           </NavLink>
           {user?.role === "Learner" && (
-    <button
-      onClick={() => navigate("/apply-mentor")}
-      className="py-2 px-4 rounded-lg flex items-center gap-2 hover:bg-gray-50"
+    <NavLink
+      to="/apply-mentor"
+         className={navLinkClass}
     >
       <FiAward /> Become a Mentor
-    </button>
+    </NavLink>
   )}
 
         </nav>
@@ -109,7 +154,7 @@ export default function UserLayout() {
           <div className="mt-6 mb-2 flex items-center gap-3">
             {/* <p>{`https://localhost:7027${user.profilePictureUrl}`}</p> */}
             <img
-              src={`https://localhost:7027${user.profilePictureUrl}`|| "/default-avatar.png"}
+              src={`https://localhost:7027${user.profilePictureUrl}`|| "/images/default-avatar.png"}
               alt="Profile"
               className="w-10 h-10 rounded-full border object-cover"
             />
@@ -127,7 +172,7 @@ export default function UserLayout() {
         {/* --- Logout --- */}
      {/* --- Logout --- */}
 <button
-  onClick={() => setShowModal(true)}   // ✅ open modal only
+  onClick={() => setShowModal(true)}   // open modal only
   className="w-full py-2 text-xs bg-gray-100 rounded-lg text-gray-700 hover:bg-gray-200 flex items-center gap-2 justify-center mt-2"
 >
   <FiLogOut /> Logout
@@ -141,8 +186,8 @@ export default function UserLayout() {
   message="Are you sure you want to logout?"
   confirmText="Logout"
   cancelText="Cancel"
-  onConfirm={handleLogout}          // ✅ perform logout here
-  onCancel={() => setShowModal(false)} // ✅ close modal
+  onConfirm={handleLogout}          //  perform logout here
+  onCancel={() => setShowModal(false)} //  close modal
 />
 
       </aside>

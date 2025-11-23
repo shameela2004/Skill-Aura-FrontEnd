@@ -149,12 +149,13 @@
 
 // export default ProfileHeader;
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { FiEdit3 } from "react-icons/fi";
 import EditProfileSection from "./EditProfileSection";
 import { FaLocationDot } from "react-icons/fa6";
 import axiosInstance from "../../services/axiosInstance";
 import CommonModal from "../CommonModal";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   user: any;
@@ -165,11 +166,27 @@ const ProfileHeader: React.FC<Props> = ({ user, onProfileUpdated }) => {
   const [isEditing, setIsEditing] = useState(false);
   const hiddenFileInput = useRef<HTMLInputElement>(null);
   const [showModal, setShowModal] = useState(false);
-
+  const [connectionCount,setConnectionCount]=useState(0);
+  const navigate=useNavigate();
+ 
   const handleImageButtonClick = (e: React.MouseEvent) => {
     e.preventDefault();
     setShowModal(true);
   };
+      useEffect(() => {
+    if (!user?.id) return;
+
+    const fetchCounts = async () => {
+      try {
+        const connRes = await axiosInstance.get("/connection/connections/count");
+        setConnectionCount(connRes.data.data ?? 0);
+      } catch {
+        setConnectionCount(0);
+      }
+    };
+
+    fetchCounts();
+  }, [user?.id]);
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
@@ -190,6 +207,7 @@ const ProfileHeader: React.FC<Props> = ({ user, onProfileUpdated }) => {
       }
     }
   };
+ 
 
   return (
     <div className="bg-white border border-gray-200 rounded-2xl shadow-md p-6 sm:p-8 transition-all">
@@ -218,8 +236,13 @@ const ProfileHeader: React.FC<Props> = ({ user, onProfileUpdated }) => {
               {user.location}
             </p>
             <p className="text-gray-500 mt-1">{user.bio || "No bio yet."}</p>
+              <div className="mt-2 flex items-center gap-4 text-sm text-gray-600 cursor-pointer">
+              <div onClick={()=>navigate("/connections")}>{connectionCount} Connections</div>
+              </div>
           </div>
+           
         </div>
+       
 
         <button
           onClick={() => setIsEditing(true)}
